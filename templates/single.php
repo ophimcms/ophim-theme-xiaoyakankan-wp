@@ -1,5 +1,20 @@
+<style>
+    .xemphim{
+        float: left;
+        padding: 0 10px;
+        border-radius: 17px;
+        background-color: #f8f8f8;
+        font-size: 13px;
+        line-height: 32px;
+        height: 32px;
+        text-decoration: none; text-decoration: none;
+        background: linear-gradient(90deg, #ffb821 0, #d9534f 45%, #ff1459);
+        background-color: #ff183e;
+        color: #fff;
+        margin-left: 10px;
+    }
+</style>
 <div class="gm-main">
-
     <div class="gm-bread">
         <ol>
             <li><a href="/">Trang chủ</a></li>
@@ -11,7 +26,7 @@
     </div>
 
     <div class="gm-vod">
-        <img class="img" src="//i0.xiaoyakankan.com/data/2406/0610/3e504f.jpg" alt="猎金叛途">
+        <img class="img" src="<?= op_get_thumb_url() ?>" alt="<?php the_title() ?>">
         <div class="more">
             <h1 class="title"> <?php the_title() ?></h1>
             <div class="info">Quốc gia：<?= op_get_regions(', ') ?></div>
@@ -21,6 +36,16 @@
             <div class="info">
                 Nội dung：　　<?php the_content() ?>
             </div>
+            <?php if(watchUrl()) : ?>
+            <a class="xemphim" href="<?= watchUrl() ?>">Xem phim</a>
+            <?php endif ?>
+            <?php if (op_get_trailer_url()) :
+                parse_str(parse_url(op_get_trailer_url(), PHP_URL_QUERY), $my_array_of_vars);
+                $video_id = $my_array_of_vars['v'];
+                ?>
+                <a class="xemphim fancybox fancybox.iframe" href="https://www.youtube.com/embed/<?= $video_id ?>">Trailer</a>
+            <?php endif ?>
+
         </div>
     </div>
     <div class="gm-meta"><h4>Bình luận</h4></div>
