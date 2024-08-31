@@ -1,5 +1,5 @@
 <style>
-    .xemphim{
+    .xemphim {
         float: left;
         padding: 0 10px;
         border-radius: 17px;
@@ -7,7 +7,8 @@
         font-size: 13px;
         line-height: 32px;
         height: 32px;
-        text-decoration: none; text-decoration: none;
+        text-decoration: none;
+        text-decoration: none;
         background: linear-gradient(90deg, #ffb821 0, #d9534f 45%, #ff1459);
         background-color: #ff183e;
         color: #fff;
@@ -36,8 +37,17 @@
             <div class="info">
                 Nội dung：　　<?php the_content() ?>
             </div>
-            <?php if(watchUrl()) : ?>
-            <a class="xemphim" href="<?= watchUrl() ?>">Xem phim</a>
+
+            <div class="info">
+                <?php if (op_get_showtime_movies()): ?>
+                    <p>Lịch chiếu : <?= op_get_showtime_movies(); ?></p>
+                <?php endif ?>
+                <?php if (op_get_notify()) : ?>
+                    <p>Thông báo : <?= op_get_notify() ?></p>
+                <?php endif ?>
+            </div>
+            <?php if (watchUrl()) : ?>
+                <a class="xemphim" href="<?= watchUrl() ?>">Xem phim</a>
             <?php endif ?>
             <?php if (op_get_trailer_url()) :
                 parse_str(parse_url(op_get_trailer_url(), PHP_URL_QUERY), $my_array_of_vars);
@@ -45,7 +55,23 @@
                 ?>
                 <a class="xemphim fancybox fancybox.iframe" href="https://www.youtube.com/embed/<?= $video_id ?>">Trailer</a>
             <?php endif ?>
-
+        </div>
+    </div>
+    <div class="detail-star">
+        <h3>Đánh giá<small class="pull-right">
+                <div>
+                    (<?= op_get_rating(); ?>
+                    sao
+                    /
+                    <?= op_get_rating_count() ?> đánh giá)
+                </div>
+            </small>
+        </h3>
+        <div class="ewave-star-box center-block">
+            <div class="rating-content">
+                <div id="movies-rating-star"></div>
+                <div id="movies-rating-msg"></div>
+            </div>
         </div>
     </div>
     <div class="gm-meta"><h4>Bình luận</h4></div>

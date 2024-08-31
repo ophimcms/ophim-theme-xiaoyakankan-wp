@@ -1,20 +1,3 @@
-<nav class="bg-page">
-    <ul id="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">
-        <li itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem"><a href="/"
-                                                                                                       itemprop="item"
-                                                                                                       title="Xem phim"><span
-                        itemprop="name">Xem Phim</span></a></li>
-        <?php foreach (op_get_genre() as $item) : ?>
-            <li itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem"
-                class="breadcrumb-item"><a itemprop="item" href="#"><span itemprop="name"><?= $item->name ?></span></a>
-            </li>
-        <?php endforeach ?>
-        <li itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem"
-            class="breadcrumb-item"><a itemprop="item"
-                                       href="<?php the_permalink(); ?>"><span
-                        itemprop="name"><?php the_title() ?></span></a></li>
-    </ul>
-</nav>
 <style>
     .active-server {
         background: #d9a0a0 !important;
@@ -32,167 +15,123 @@
         cursor: pointer !important;
     }
 </style>
-<main id="main-body" class="bg-page">
-    <div>
-        <section class="video-playlist-player">
-            <div class="container no-line-height pad-top-30 pad-bottom-20">
-                <div class="sub-container">
-                    <div class="row">
-                        <div class="col-md-8">
+<div class="gm-main">
+    <div class="gm-bread">
+        <ol>
+            <li><a href="/">Trang chủ</a></li>
+            <?php foreach (op_get_genre() as $item) : ?>
+                <li><a href="#"><?= $item->name ?></a></li>
+            <?php endforeach ?>
+            <li class="on"> <?php the_title() ?></li>
+        </ol>
+    </div>
+    <div id="dom-player" class="dplayer dplayer-no-danmaku dplayer-playing dplayer-hide-controller">
+        <div class="dplayer-mask"></div>
+        <div class="dplayer-video-wrap">
+            <div class="dplayer-video dplayer-video-current" id="player-wrapper">
+            </div>
+        </div>
 
-                            <div class="big-card-player-box big-card-169">
-                                <div id="videoPlayer" class="zplayerjs-wrapper player-container">
-                                    <div class="video">
-                                        <div id="player-wrapper" data-jwplayer-id="video">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="video-playlist-wrapper pad-top-15" style=" text-align: center">
-                                <a onclick="chooseStreamingServer(this)" data-type="m3u8" id="streaming-sv"
-                                   data-id="<?= episodeName() ?>"
-                                   data-link="<?= m3u8EpisodeUrl() ?>" class="streaming-server tag-link"
-                                   style="background: #232328;color: #FFF">
-                                    Nguồn #1
-                                </a>
-                                <a onclick="chooseStreamingServer(this)" data-type="embed" id="streaming-sv"
-                                   data-id="<?= episodeName() ?>" data-link="<?= embedEpisodeUrl() ?>"
-                                   class="streaming-server tag-link" style="background: #232328;color: #FFF">
-                                    Nguồn #2
-                                </a>
-                            </div>
-                            <div class="video-playlist-wrapper pad-top-15">
-                                <div class="video-actions">
-
-                                    <ul class="action-list">
-                                        <li><a class="action" href="#comment"><i class="icon ic-comment"></i><span>Bình luận</span></a>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <p style="margin-bottom:8px">
-                                    Nếu bạn bị nhà cung cấp dịch vụ mạng chặn truy cập website chúng tôi, vui lòng tại
-                                    kho ứng dụng của <a href="//one.one.one.one/" target="_blank" style="color:orange;">Google</a>
-                                    hoặc <a href="//one.one.one.one/" target="_blank" style="color:orange;">App
-                                        Store</a> tải xuống App <a href="//one.one.one.one/" target="_blank"
-                                                                   style="color:orange; font-weight:800">1.1.1.1</a> an
-                                    toàn và bảo mật để sử dụng
-                                </p>
-                                <div class="artist-profile clearfix" style="">
-                                    <div class="detail-star">
-                                        <h3>Đánh giá<small class="pull-right">
-                                                <div>
-                                                    (<?= op_get_rating(); ?>
-                                                    sao
-                                                    /
-                                                    <?= op_get_rating_count() ?> đánh giá)
-                                                </div>
-                                            </small>
-                                        </h3>
-                                        <div class="ewave-star-box center-block">
-                                            <div class="rating-content">
-                                                <div id="movies-rating-star"></div>
-                                                <div id="movies-rating-msg"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="list-episode-servers">
-                                    <?php foreach (episodeList() as $key => $server) { ?>
-                                        <div class="play-detail">
-                                            <div class="list-episodes"><span><?= $server['server_name'] ?>:</span>
-                                                <div class="box-season">
-                                                    <div class="tab-pane in active">
-                                                        <ul class="list-episode">
-                                                            <?php foreach ($server['server_data'] as $list) : ?>
-                                                                <li class="ng-scope _collection_item"><a
-                                                                            href="<?= $list['getUrl'] ?>"
-                                                                            class=" <?php if ($list == getEpisode()) {
-                                                                                echo ' active';
-                                                                            } ?>"><?= $list['name'] ?></a></li>
-                                                            <?php endforeach; ?>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-
-                                <div>
-                                    <div class="heading">TỪ KHÓA</div>
-                                    <div class="tags-list-movie"><?= op_get_tags(' ') ?></div>
-                                </div>
-                                <div id="comment">
-                                    <div class="heading">BÌNH LUẬN</div>
-                                    <div class="comment-list-wrapper" style="background-color: #FFF !important;">
-                                        <div class="fb-comments w-full" data-href="<?= getCurrentUrl() ?>"
-                                             data-width="100%"
-                                             data-numposts="5" data-colorscheme="light" data-lazy="true">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <aside class="z-video-player-aside">
-
-                                <div class="z-aside-header clearfix">
-                                    <div class="heading pull-left">PHIM LIÊN QUAN</div>
-                                </div>
-                                <ul class="z-video-130-73-list list-info-mw-150">
-                                    <?php
-                                    $postType = 'ophim';
-                                    $taxonomyName = 'ophim_genres';
-                                    $taxonomy = get_the_terms(get_the_id(), $taxonomyName);
-                                    if ($taxonomy) {
-                                        $category_ids = array();
-                                        foreach ($taxonomy as $individual_category) $category_ids[] = $individual_category->term_id;
-                                        $args = array('post_type' => $postType, 'post__not_in' => array(get_the_id()), 'posts_per_page' => 12, 'tax_query' => array(array('taxonomy' => $taxonomyName, 'field' => 'term_id', 'terms' => $category_ids,),));
-                                        $my_query = new wp_query($args);
-
-                                        if ($my_query->have_posts()):
-                                            while ($my_query->have_posts()):$my_query->the_post();
-                                                ?>
-                                                <li>
-                                                    <div class="z-card card-130-73">
-                                                        <a class="thumb-130-73"
-                                                           href="<?php the_permalink(); ?>">
-                                                            <div class=" lazyload-img loaded"><img class="ateslazi"
-                                                                                                   src="<?= op_get_poster_url() ?>"
-                                                                                                   data-src="<?= op_get_poster_url() ?>"
-                                                                                                   alt="<?php the_title(); ?> / <?= op_get_original_title() ?>">
-                                                            </div>
-                                                            <i class="icon ic-svg-play-outline"></i><span
-                                                                    class="opac"></span>
-                                                        </a>
-                                                        <div class="card-info">
-                                                            <div class="title"><a class=""
-                                                                                  title="Phim Tình Tựa Ánh Hồng / Rainbow Round My Shoulder"
-                                                                                  href="<?php the_permalink(); ?>"><?php the_title(); ?> </a>
-                                                            </div>
-                                                            <div class="artist"><a class="mr-2" title="Will"
-                                                                                   href="<?php the_permalink(); ?>"><?= op_get_original_title() ?></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            <?php
-                                            endwhile;
-                                        endif;
-                                        wp_reset_query();
-                                    }
-                                    ?>
-                                </ul>
-                            </aside>
-                        </div>
-                    </div>
+    </div>
+    <div class="video-info-aux" style="margin-top: 20px;margin-bottom:20px ;text-align: center">
+        <a onclick="chooseStreamingServer(this)" data-type="m3u8" id="streaming-sv"
+           data-id="<?= episodeName() ?>"
+           data-link="<?= m3u8EpisodeUrl() ?>" class="streaming-server tag-link"
+           style="background: #232328;color: #FFF">
+            Nguồn #1
+        </a>
+        <a onclick="chooseStreamingServer(this)" data-type="embed" id="streaming-sv"
+           data-id="<?= episodeName() ?>" data-link="<?= embedEpisodeUrl() ?>"
+           class="streaming-server tag-link" style="background: #232328;color: #FFF">
+            Nguồn #2
+        </a>
+    </div>
+    <div id="dom-source">
+        <?php foreach (episodeList() as $key => $server) { ?>
+            <div class="source">
+                <div class="title">
+                    <span class="name"><?= $server['server_name'] ?></span>
+                </div>
+                <div class="list">
+                    <?php foreach ($server['server_data'] as $list) : ?>
+                        <a class="<?php if ($list == getEpisode()) {
+                            echo ' on';
+                        } ?>" href="<?= $list['getUrl'] ?>"><?= $list['name'] ?></a>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        </section>
+        <?php } ?>
     </div>
-</main>
+
+    <div class="gm-vod">
+        <img class="img" src="<?= op_get_thumb_url() ?>" alt="<?php the_title() ?>">
+        <div class="more">
+            <h1 class="title"> <?php the_title() ?> - Tập <?= episodeName() ?></h1>
+            <div class="info">Quốc gia：<?= op_get_regions(', ') ?></div>
+            <div class="info">Năm：2024</div>
+            <div class="info">Đạo diễn：<?= op_get_directors(10, ', ') ?></p></div>
+            <div class="info">Diễn viên：<?= op_get_actors(110, ', ') ?></div>
+            <div class="info">
+                Nội dung：　　<?php the_content() ?>
+            </div>
+
+            <div class="info">
+                <?php if (op_get_showtime_movies()): ?>
+                    <p>Lịch chiếu : <?= op_get_showtime_movies(); ?></p>
+                <?php endif ?>
+                <?php if (op_get_notify()) : ?>
+                    <p>Thông báo : <?= op_get_notify() ?></p>
+                <?php endif ?>
+            </div>
+        </div>
+        <div class="detail-star">
+            <h3>Đánh giá<small class="pull-right">
+                    <div>
+                        (<?= op_get_rating(); ?>
+                        sao
+                        /
+                        <?= op_get_rating_count() ?> đánh giá)
+                    </div>
+                </small>
+            </h3>
+            <div class="ewave-star-box center-block">
+                <div class="rating-content">
+                    <div id="movies-rating-star"></div>
+                    <div id="movies-rating-msg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="gm-meta"><h4>Bình luận</h4></div>
+    <div class="gm-list">
+        <div style="width: 100%; background-color: #fff">
+            <div class="fb-comments w-full" data-href="<?= getCurrentUrl() ?>" data-width="100%"
+                 data-numposts="5" data-colorscheme="light" data-lazy="true">
+            </div>
+        </div>
+    </div>
+    <div class="gm-meta"><h4>Có thể bạn thích</h4></div>
+    <div class="gm-list">
+        <?php
+        $postType = 'ophim';
+        $taxonomyName = 'ophim_genres';
+        $taxonomy = get_the_terms(get_the_id(), $taxonomyName);
+        if ($taxonomy) {
+            $category_ids = array();
+            foreach ($taxonomy as $individual_category) $category_ids[] = $individual_category->term_id;
+            $args = array('post_type' => $postType, 'post__not_in' => array(get_the_id()), 'posts_per_page' => 12, 'tax_query' => array(array('taxonomy' => $taxonomyName, 'field' => 'term_id', 'terms' => $category_ids,),));
+            $my_query = new wp_query($args);
+
+            if ($my_query->have_posts()):
+                while ($my_query->have_posts()):$my_query->the_post();
+                    get_template_part('templates/section/section_thumb_item');
+                endwhile;
+            endif;
+            wp_reset_query();
+        }
+        ?>
+    </div>
+</div>
 <?php
 add_action('wp_footer', function () { ?>
     <script src="<?= get_template_directory_uri() ?>/assets/player/js/p2p-media-loader-core.min.js"></script>

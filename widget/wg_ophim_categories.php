@@ -36,7 +36,6 @@ class WG_oPhim_Categories extends WP_Widget
         $years = $instance['years'];
         $genres = $instance['genres'];
         $regions = $instance['regions'];
-        $style = $instance['style'] ?? 1;
         echo $before_widget;
         ob_start();
         ?>
@@ -108,17 +107,7 @@ class WG_oPhim_Categories extends WP_Widget
         $query = new WP_Query($args);
         $querytop = new WP_Query($args2); ?>
         <?php if ($query->have_posts()) :
-        switch ($style) {
-            case 1:
-                include THEME_URL . '/templates/section/section_thumb.php';
-                break;
-            case 2:
-                include THEME_URL . '/templates/section/section_slide.php';
-                break;
-            default:
-                include THEME_URL . '/templates/section/section_thumb.php';
-        }
-
+        include THEME_URL . '/templates/section/section_thumb.php';
     endif; ?>
         <?php wp_reset_postdata(); ?>
 
@@ -236,23 +225,6 @@ class WG_oPhim_Categories extends WP_Widget
                 <?php } ?>
             </select>
         </p>
-
-        <p>
-            <label><?php _e('Hiển thị trang chủ', 'ophim') ?></label>
-            <br>
-            <?php
-            $f = array('1' => __('Thumb', 'ophim'), '2' => __('Slide', 'ophim'));
-            foreach ($f as $x => $n) { ?>
-                <label for="<?php echo $this->get_field_id("style"); ?>_<?php echo $x ?>">
-                    <input id="<?php echo $this->get_field_id("style"); ?>_<?php echo $x ?>" class="<?php echo $x ?>"
-                           name="<?php echo $this->get_field_name("style"); ?>" type="radio"
-                           value="<?php echo $x ?>" <?php if (isset($style)) {
-                        checked($x, $style, true);
-                    } ?> /> <?php echo $n ?>
-                </label>
-            <?php } ?>
-        </p>
-
 
         <p>
             <label><?php _e('Sắp xếp', 'ophim') ?></label>

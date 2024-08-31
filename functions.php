@@ -13,5 +13,4 @@ require_once(THEME_URL . '/inc/register_sidebar.php');
 require_once(THEME_URL . '/inc/ajax.php');
 require_once(THEME_URL . '/inc/front.php');
 require_once(WIDGET . '/wg_ophim_categories.php');
-require_once(WIDGET . '/wg_ophim_slide_poster.php');
 require_once(WIDGET . '/wg_ophim_footer.php');
