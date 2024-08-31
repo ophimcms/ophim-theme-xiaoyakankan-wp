@@ -15,11 +15,3 @@ $footer = array('name' => __('Ophim Footer', 'ophim'), 'id' => 'widget-footer',
     'before_title' => '',
     'after_title' => '',);
 register_sidebar($footer);
-$slider_poster = array('name' => __('Ophim Slider', 'ophim'), 'id' => 'widget-slider-poster',
-    'description' => 'Hiển thị ở slide trang chủ',
-    'class' => '',
-    'before_widget' => '',
-    'after_widget' => '',
-    'before_title' => '',
-    'after_title' => '',);
-register_sidebar($slider_poster);
