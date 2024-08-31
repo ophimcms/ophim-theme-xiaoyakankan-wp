@@ -16,7 +16,7 @@
         </div>
         <div class="search">
             <form action="/">
-                <input name="s" type="text" placeholder="Tìm kiếm" value="">
+                <input name="s" type="text" placeholder="Tìm kiếm" value="<?php echo "$s"; ?>" autocomplete="off">
                 <button type="submit"></button>
             </form>
         </div>
