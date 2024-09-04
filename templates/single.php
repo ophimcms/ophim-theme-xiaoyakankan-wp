@@ -31,7 +31,7 @@
         <div class="more">
             <h1 class="title"> <?php the_title() ?></h1>
             <div class="info">Quốc gia：<?= op_get_regions(', ') ?></div>
-            <div class="info">Năm：2024</div>
+            <div class="info">Năm：<?= op_get_year(' ') ?></div>
             <div class="info">Đạo diễn：<?= op_get_directors(10, ', ') ?></p></div>
             <div class="info">Diễn viên：<?= op_get_actors(110, ', ') ?></div>
             <div class="info">
